@@ -1,6 +1,6 @@
 name: Deploy Project to Surge
 on:
-  pull_request:
+  push:
     branches: [main]
 jobs:
   deploy:
@@ -31,7 +31,9 @@ jobs:
         run: npm ci
 
       - name: Deploy to Production
-        run: npx surge --project ./dist --domain trello.bsd.surge.sh
+        run: |
+          npm run build
+          npx surge --project ./dist --domain https://trello.bsd.surge.sh
         env: 
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
