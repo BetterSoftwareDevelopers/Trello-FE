@@ -1,6 +1,6 @@
 name: Deploy Project to Surge
 on:
-  pull_request:
+  push:
     branches: [main]
 jobs:
   deploy:
