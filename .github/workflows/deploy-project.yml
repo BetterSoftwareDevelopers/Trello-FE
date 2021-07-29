@@ -14,3 +14,6 @@ jobs:
           username: 'harishkrishnan24'
           reponame: 'Trello-FE'
           token: ${{ secrets.GITHUB_TOKEN }}
+          gitemail: releaseManager@bettersoftwaredevelopers.com
+          gitname: Release Manager
+          gitmsg: New App Version Deployed
