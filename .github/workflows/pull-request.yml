@@ -24,7 +24,7 @@ jobs:
       - name: Check Linting
         run: npm run lint
       - name: Unit Tests
-        run: npm test:unit -- --coverage
+        run: npm run test:unit -- --coverage
       - name: E2E Tests
         uses: cypress-io/github-action@v2
         with:
