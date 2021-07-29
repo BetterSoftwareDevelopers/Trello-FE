@@ -1,0 +1,25 @@
+name: Pull Request Builder
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  pull-request:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v2
+      - name: Use NodeJs
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.17.3"
+      - name: NPM Install
+        run: npm CI
+      - name: Check Linting
+        run: npm run lint
+      - name: Unit Tests
+        run: npm test:unit -- --coverage
+      - name: E2E Tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm run serve
