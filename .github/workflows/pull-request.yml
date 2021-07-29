@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: "14.17.3"
       - name: NPM Install
-        run: npm CI
+        run: npm ci
       - name: Check Linting
         run: npm run lint
       - name: Unit Tests
