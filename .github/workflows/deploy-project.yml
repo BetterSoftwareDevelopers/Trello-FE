@@ -1,6 +1,6 @@
-name: Deploy Project to Surge
+name: Deploy Project to Production
 on:
-  push:
+  pull_request:
     branches: [main]
 jobs:
   deploy:
@@ -9,31 +9,14 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v2
 
-      - name: Use NodeJs
-        uses: actions/setup-node@v1
+      - name: Deploy to Production Heroku
+        uses: akhileshns/heroku-deploy@v3.4.6
         with:
-          node-version: "14.17.3"
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: NPM Install
-        run: npm ci
-
-      - name: Deploy to Production
+            heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+            heroku_app_name: "bsd-trello"
+            heroku_email: "harishkrishnan1993@gmail.com"
+            justlogin: true
         run: |
-          npm run build
-          npx surge --project ./dist --domain https://bsd-trello.surge.sh
-        env: 
-          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+          heroku buildpacks:add heroku/nodejs
+          heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static
+          git push heroku main
