@@ -13,6 +13,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "14.17.3"
+
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -25,11 +26,15 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - name: NPM Install
         run: npm ci
+
       - name: Check Linting
         run: npm run lint
+
       - name: Unit Tests
         run: npm run test:unit -- --coverage
+        
       - name: E2E Tests
         run: npm run test:e2e -- --headless
