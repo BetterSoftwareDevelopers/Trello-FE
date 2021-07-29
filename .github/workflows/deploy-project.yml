@@ -1,0 +1,19 @@
+name: Deploy to Github Pages
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    name: Deploy to Github pages
+    steps:
+      - uses: actions/checkout@v2
+      - id: Deploy
+        uses: xRealNeon/VuePagesAction@1.0.0
+        with:
+          username: 'harishkrishnan24'
+          reponame: 'Trello-FE'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          gitemail: releaseManager@bettersoftwaredevelopers.com
+          gitname: Release Manager
+          gitmsg: New App Version Deployed
